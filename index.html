@@ -3,417 +3,531 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sleeping AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
     
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Great+Vibes&family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="ai.png">
+    <title>Sleeping AI</title>
+
     <style>
-        /* --- General Setup & Variables --- */
+        /* --- CSS Color Variables (Black, Maroon, White Theme) --- */
         :root {
-            --color-dark: #000000;
-            --color-light: #F0F0F0; /* Off-white for less strain */
-            --color-accent: #FFFFFF;
-            --color-text-dim: #BBBBBB;
-            --font-main: 'Roboto Mono', monospace;
-            /* Glitch Colors */
-            --color-red: #FF00FF;
-            --color-blue: #00FFFF;
+            --maroon-accent: #A51C30;      /* Primary Maroon (Used for Titles/Borders) */
+            --dartmouth-green: #00693E;    /* Primary Link Color */
+            --color-bg: #000000;           /* Black background */
+            --color-text: #FFFFFF;         /* White primary text */
+            --color-secondary-text: #AAAAAA; /* Gray for subtle text */
+            --color-card-bg: #111111;      /* Off-black for cards/sections */
         }
 
+        /* --- General Body and Typography --- */
         body {
-            background-color: var(--color-dark);
-            color: var(--color-light);
-            font-family: var(--font-main);
+            font-family: 'Google Sans', 'Space Grotesk', sans-serif;
+            color: var(--color-text);
+            background-color: var(--color-bg);
             margin: 0;
+            padding: 0;
             line-height: 1.6;
+            font-size: 16px;
+            cursor: default;
         }
 
-        /* --- Layout & Structure --- */
+        /* --- Layout Container --- */
         .container {
-            width: 90%;
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 20px 0;
+            padding: 0 20px; /* Default horizontal padding */
         }
 
+        /* --- Header/Navigation (Dynamic Typewriter Effect) --- */
         header {
-            border-bottom: 1px solid var(--color-text-dim);
-            padding: 10px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background-color: var(--color-dark);
+            padding: 40px 0;
+            border-bottom: 3px solid var(--maroon-accent);
+            margin-bottom: 40px;
         }
 
-        section {
-            padding: 80px 0;
+        .header-content {
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+            /* Adjusted height to prevent overlap/cutoff */
+            height: 3.5em; 
+            overflow: hidden; 
         }
         
-        /* --- Typography & Elements --- */
-        h1, h2, h3 {
+        #dynamic-title-container {
+            font-size: 3em;
             font-weight: 700;
-            color: var(--color-accent);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            color: var(--color-text);
+            text-align: center;
+            margin: 0;
+            white-space: nowrap;
+        }
+        
+        #dynamic-title-container span {
+            color: var(--maroon-accent);
         }
 
-        h1 { font-size: 2.5em; }
-        h2 { font-size: 1.8em; margin-bottom: 40px; border-bottom: 1px solid var(--color-text-dim); padding-bottom: 10px;}
-        h3 { font-size: 1.2em; }
+        /* --- Cursor Removal --- */
+        #dynamic-title-container:after {
+            content: ''; 
+        }
+        
+        /* --- Section Styling --- */
+        section {
+            padding: 40px 0;
+            margin-bottom: 30px;
+        }
 
-        a {
-            color: var(--color-accent);
-            text-decoration: none;
+        .section-title {
+            font-size: 2.2em;
+            color: var(--maroon-accent);
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--color-secondary-text);
+            padding-bottom: 5px;
+        }
+        
+        .legal-notice {
+            padding: 20px;
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--maroon-accent);
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: var(--color-secondary-text);
+            margin-top: 30px;
+        }
+        
+        .legal-notice strong {
+            color: var(--maroon-accent);
+        }
+
+        .mission-text {
+            font-size: 1.2em;
+            line-height: 1.8;
+        }
+        
+        /* --- Research Focus Grid (Responsive by default) --- */
+        .research-grid {
+            display: grid;
+            /* Allow columns to shrink to a min of 280px or take equal space */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .focus-card {
+            background-color: var(--color-card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid var(--maroon-accent);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s;
+        }
+        
+        .focus-card:hover {
+            transform: translateY(-5px);
+            border-left: 5px solid var(--color-text);
+        }
+
+        .focus-card h3 {
+            color: var(--color-text);
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+
+        #collaborators {
+            padding: 20px 0;
+            margin-top: 30px;
+            border-top: 2px solid var(--maroon-accent);
+            border-bottom: 2px solid var(--maroon-accent);
+            text-align: center;
+        }
+
+        .collaborators-inner {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        
+        .collaborator-header {
+            font-size: 1.2em;
+            color: var(--color-secondary-text);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .carousel-track {
+            display: inline-block;
+            animation: scroll-left 20s linear infinite; 
+            will-change: transform;
+        }
+
+        .collaborator-item {
+            display: inline-block;
+            margin-right: 60px;
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--color-secondary-text);
             transition: color 0.3s;
         }
 
-        a:hover {
-            color: var(--color-text-dim);
+        .collaborator-item:hover {
+            color: var(--maroon-accent);
         }
 
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            border: 2px solid var(--color-accent);
-            color: var(--color-accent);
-            text-transform: uppercase;
-            font-size: 0.9em;
-            letter-spacing: 1px;
-            margin-top: 20px;
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } 
         }
-
-        .button:hover {
-            background-color: var(--color-accent);
-            color: var(--color-dark);
+        
+        /* --- Footer --- */
+        footer {
+            padding: 30px 0;
+            margin-top: 50px;
         }
-
-        /* --- Header/Nav Specific --- */
-        .header-content {
+        
+        .footer-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 0 20px; 
+            border-top: 1px solid var(--color-card-bg); 
+            padding-top: 30px;
         }
 
-        .logo a {
-            font-size: 1.5em;
-            font-weight: 700;
-        }
-
-        nav a {
-            margin-left: 20px;
-            font-size: 0.9em;
-            color: var(--color-text-dim);
-        }
-
-        nav a:hover {
-            color: var(--color-accent);
-        }
-
-        /* --- Hero Section Specific --- */
-        #hero {
-            height: 80vh; 
+        .social-links {
             display: flex;
             align-items: center;
-            text-align: center;
-            background-color: var(--color-dark);
+            order: 1; 
         }
         
-        #hero .container {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-
-        #hero h1 {
-            font-size: 4em;
-            margin-bottom: 0.2em;
-        }
-
-        #hero p {
-            font-size: 1.2em;
-            color: var(--color-text-dim);
-        }
-
-        /* ==================================== */
-        /* --- GLITCH EFFECT STYLING --- */
-        /* ==================================== */
-        .glitch-on-load {
-            position: relative;
-            animation: glitch-anim 1s linear both; /* Play once on load */
-        }
-
-        .glitch-on-load::before,
-        .glitch-on-load::after {
-            content: attr(data-text); /* Pull text content from data attribute */
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        .glitch-on-load::before {
-            left: 2px;
-            text-shadow: -2px 0 var(--color-red);
-            clip: rect(44px, 450px, 56px, 0); /* Initial random clip area */
-            animation: glitch 1s infinite linear alternate-reverse;
-            animation-delay: 0.6s;
-        }
-
-        .glitch-on-load::after {
-            left: -2px;
-            text-shadow: 2px 0 var(--color-blue);
-            clip: rect(85px, 450px, 140px, 0); /* Initial random clip area */
-            animation: glitch 1.2s infinite linear alternate-reverse;
-        }
-
-        /* Glitch Animation for the pseudo elements */
-        @keyframes glitch {
-            0% { clip: rect(2px, 450px, 40px, 0); transform: skew(0.5deg); }
-            10% { clip: rect(80px, 450px, 110px, 0); transform: skew(-0.5deg); }
-            20% { clip: rect(10px, 450px, 50px, 0); transform: skew(0.2deg); }
-            30% { clip: rect(70px, 450px, 130px, 0); transform: skew(-0.3deg); }
-            40% { clip: rect(100px, 450px, 150px, 0); transform: skew(0.1deg); }
-            50% { clip: rect(10px, 450px, 20px, 0); transform: skew(0.4deg); }
-            60% { clip: rect(120px, 450px, 150px, 0); transform: skew(-0.1deg); }
-            70% { clip: rect(5px, 450px, 80px, 0); transform: skew(0.3deg); }
-            80% { clip: rect(130px, 450px, 150px, 0); transform: skew(-0.2deg); }
-            90% { clip: rect(60px, 450px, 90px, 0); transform: skew(0.5deg); }
-            100% { clip: rect(40px, 450px, 100px, 0); transform: skew(-0.4deg); }
+        .social-links a {
+            font-size: 1.8em;
+            margin-right: 15px;
         }
         
-        /* Main Animation to stabilize the text after the initial glitch */
-        @keyframes glitch-anim {
-            0%, 75% { opacity: 0; }
-            10% { opacity: 0.1; }
-            20% { opacity: 0.8; }
-            30% { opacity: 0.1; }
-            40% { opacity: 0.9; }
-            50% { opacity: 0.2; }
-            60% { opacity: 0.9; }
-            100% { opacity: 1; }
+        .footer-center-text {
+            color: var(--color-secondary-text);
+            font-size: 1.1em;
+            font-weight: 700;
+            order: 2;
         }
 
-        /* --- Research & Grid Specific --- */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-
-        .card {
-            border: 1px solid var(--color-text-dim);
-            padding: 20px;
-        }
-
-        .card h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
-            color: var(--color-accent);
+        .hf-logo {
+            height: 1.8em; 
+            width: auto;
+            vertical-align: middle;
+            filter: invert(1) brightness(0.65); 
+            transition: filter 0.3s;
         }
         
-        .research-summary {
-            margin-bottom: 40px;
+        .social-links a:hover .hf-logo {
+            filter: invert(1) brightness(1); 
+        }
+
+        .footer-contact {
+            color: var(--color-secondary-text);
+            font-size: 1.1em;
+            font-weight: 400;
+            order: 3;
         }
         
-        /* --- Legal Section Specific --- */
-        #legal {
-            background-color: #111111;
-            border-top: 1px solid #333333;
-            border-bottom: 1px solid #333333;
-        }
-
-        /* --- Footer Specific --- */
-        footer {
-            text-align: center;
-            border-top: 1px solid var(--color-text-dim);
-            padding: 40px 0;
-            color: var(--color-text-dim);
-            font-size: 0.8em;
+        a {
+            color: var(--dartmouth-green);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
         }
         
-        /* ==================================== */
-        /* --- MOBILE OPTIMIZATION (600px) --- */
-        /* ==================================== */
-        @media (max-width: 600px) {
-            
-            section {
-                padding: 40px 0;
-            }
+        .social-links a {
+            color: var(--color-secondary-text);
+        }
 
-            /* --- Typography Scaling --- */
-            h1 { font-size: 2.5em; }
-            h2 { font-size: 1.5em; margin-bottom: 30px; }
-            #hero h1 {
-                font-size: 2.8em;
-            }
-            #hero p {
-                font-size: 1em;
-            }
-            
-            /* Glitch adjustments for smaller screen */
-            .glitch-on-load::before,
-            .glitch-on-load::after {
-                text-shadow: -1px 0 var(--color-red);
-                left: 1px;
-            }
-            
-            .glitch-on-load::after {
-                text-shadow: 1px 0 var(--color-blue);
-                left: -1px;
-            }
+        .social-links a:hover {
+            color: var(--maroon-accent);
+        }
+        
+        .footer-contact a {
+             color: var(--color-secondary-text);
+        }
+        
+        .footer-contact a:hover {
+             color: var(--maroon-accent);
+        }
 
-            /* --- Header & Navigation Collapse --- */
+        /* --- Mobile Responsiveness Enhancements (Ensuring fluid layout) --- */
+        @media (max-width: 768px) {
+            /* Header adjustments for smaller text and fixed height */
             .header-content {
+                height: 2.5em; /* Adjusted slightly more for small screens */
+            }
+            #dynamic-title-container {
+                font-size: 2.2em;
+            }
+            
+            /* General padding and sizing adjustments */
+            .container {
+                padding: 0 15px; /* Slightly reduced padding */
+            }
+            body {
+                font-size: 15px;
+            }
+            .section-title {
+                font-size: 1.8em;
+            }
+            .mission-text {
+                font-size: 1.1em;
+            }
+
+            /* Research Grid will naturally stack below 280px minimum */
+            .research-grid {
+                grid-template-columns: 1fr; /* Force single column on smaller tablets/vertical orientation */
+            }
+        }
+        
+        @media (max-width: 500px) {
+            /* Adjustments for narrow mobile phones */
+            .container {
+                padding: 0 10px; /* Minimal padding on very narrow screens */
+            }
+            .header-content {
+                 height: 2.2em; /* Further reduced height for smallest phones */
+            }
+            #dynamic-title-container {
+                font-size: 1.8em; /* Smaller dynamic title */
+            }
+
+            /* Footer stacking for mobile */
+            .footer-content {
                 flex-direction: column;
-                align-items: flex-start;
+                gap: 15px;
+                padding-top: 20px;
+                text-align: center;
             }
+            .social-links {
+                order: 3; 
+            }
+            .footer-center-text {
+                order: 1; 
+            }
+            .footer-contact {
+                order: 2; 
+            }
+            .footer-center-text, .footer-contact {
+                font-size: 0.9em;
+            }
+            
+            .collaborator-item {
+                font-size: 1.5em; /* Smaller text in the carousel */
+                margin-right: 30px;
+            }
+        }
+        
+        /* --- Modern Scrollbar Customization (Webkit Browsers: Chrome, Edge, Safari) --- */
+        /* Scrollbar track */
+        ::-webkit-scrollbar {
+            width: 10px; /* Width of the vertical scrollbar */
+        }
+        
+        /* Scrollbar background */
+        ::-webkit-scrollbar-track {
+            background: var(--color-bg); /* Black background (same as body) */
+        }
 
-            nav {
-                margin-top: 10px;
-                display: flex;
-                flex-wrap: wrap;
-            }
+        /* Scrollbar handle (the moving part) */
+        ::-webkit-scrollbar-thumb {
+            background: var(--dartmouth-green); /* Dartmouth Green color */
+            border-radius: 5px; /* Rounded edges */
+        }
 
-            nav a {
-                margin: 5px 10px 5px 0;
-                font-size: 0.8em;
-            }
-
-            /* --- Grid Collapse --- */
-            .grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
+        /* Scrollbar handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--maroon-accent); /* Optional: Hover color change to maroon accent */
         }
     </style>
 </head>
 <body>
-
     <header>
-        <div class="container header-content">
-            <div class="logo">
-                <a href="#hero">SLEEPING AI</a>
+        <div class="container">
+            <div class="header-content">
+                <h1 id="dynamic-title-container"></h1>
             </div>
-            <nav>
-                <a href="#wake-up-call">About</a>
-                <a href="#research">Research</a>
-                <a href="#team">Team</a>
-                <a href="#legal">Legal</a>
-                <a href="#contact">Funding</a>
-                <a href="https://github.com/Sleeping-AI" target="_blank">GitHub</a> </nav>
         </div>
     </header>
 
-    <section id="hero">
-        <div class="container">
-            <h1 class="glitch-on-load" data-text="SLEEPING AI">SLEEPING AI</h1>
-            <p>// The Research Lab That Should Not Exist. (But does, annoyingly well.) //</p>
-            <a href="#wake-up-call" class="button">Existence</a>
+    <main class="container">
+        <div class="legal-notice">
+            <p><strong>Legal Notice:</strong> Sleeping AI is a decentralised lab and we operate on North America, Central Europe, Eastern Europe, Mediterranean, South Asia, and Asian laws per the local laws applicable for our respective data centres, individual, and infrastructure.</p>
         </div>
-    </section>
-    
-    <section id="wake-up-call">
-        <div class="container">
-            <h2>01 / THE WAKE-UP CALL</h2>
-            
-            <p class="research-summary">
-                At the moment, there are many labs working in the advancement of artificial intelligence and many with the focus of AGI (Artificial General Intelligence) and ASI (Artificial Super Intelligence). Organisations such as OpenAI, DeepMind, LAION and SSI are working on critical and large-scale projects that are valuable but often overlook research pivots and directions that are either **too publicly heated/financially and marketing stand-point won't sell.**
+
+        <section id="mission">
+            <h2 class="section-title">Our Mission</h2>
+            <p class="mission-text">
+                We are a non-profit, decentralized lab operating across continents with highly skilled programmers and researchers. We tackle the most challenging problems in computing and artificial intelligence, prioritizing long-term impact over scale. We believe that high-quality datasets and innovative architectures deliver far greater value than arbitrarily large datasets or inflated ambitions.
             </p>
-            <p class="research-summary">
-                Sleeping AI was meant to change that narrative and work on research questions that are heated and tough so that the general public have someone afterall who focus on **raw research** rather than weighing benefits.
-            </p>
+        </section>
+
+        <section id="research">
+            <h2 class="section-title">Key Research Focuses</h2>
+            <div class="research-grid">
+                <div class="focus-card">
+                    <h3>Dataset Compilation & Curation</h3>
+                    <p>Collecting and cleaning terabytes of data to create domain specific datasets for training advanced models. Instances include audio, textual and video datasets. Includes: writing custom processing and compilation pipeline.</p>
+                </div>
+                <div class="focus-card">
+                    <h3>Training models and architecture</h3>
+                    <p>Developing novel architecture and training large-scale models for scaling laws and domain specific reasons. It includes fine-tuning and post-training paradigms.</p>
+                </div>
+                <div class="focus-card">
+                    <h3>Scaling laws and limits of Compute</h3>
+                    <p>We study compute returns and scaling law of architectures for Deep learning and advanced artificial intelligence models. Heavily inspired by LAION and Open-SCI.</p>
+                </div>
+                <div class="focus-card">
+                    <h3>Benchmark and Evals</h3>
+                    <p>Evals are core of all training models, we invest time and resources understanding the nuances and asking fundamental questions. It was quite inspired by Xeophone and Yoav Goldberg.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="publications">
+            <h2 class="section-title">Publications</h2>
+            <div class="focus-card" style="border-left: 5px solid var(--color-text);">
+                <h3>High-Impact Research</h3>
+                <p style="font-size: 1.1em; color: var(--maroon-accent); font-weight: 600;">
+                    Currently under preparation. Our initial findings will be published soon.
+                </p>
+                <p>Stay tuned for peer-reviewed papers on music, evals and scaling laws.</p>
+            </div>
+        </section>
+
+        <section id="collaboration">
+            <h2 class="section-title">Collaborate & Support</h2>
             <p>
-                We commit large-enough resources on our projects depending on how much we have available. We are inspired by "the Anonymous" team who first formed a decentralised intelligence network of talented programmers and curious folks with nothing but shared interest.
+                We actively seek collaborations with academic institutions and industry partners on cutting-edge AI projects.
             </p>
-            
-            <h3 style="margin-top: 60px;">CRITERIA FOR PROJECT SELECTION</h3>
             <ul>
-                <li>there are some well-known existing folks working on this question.</li>
-                <li>the field according to present outcome has a viable future.</li>
-                <li>collection of dataset and training is legally and financially challenging.</li>
-                <li>it's simply fun!</li>
+                <li><strong>Research Partnerships:</strong> Focus on joint publications and advanced model development.</li>
+                <li><strong>Internships:</strong> Opportunities for motivated researchers interested in datasets and scaling.</li>
+                <li><strong>Funding:</strong> We appreciate support via compute grants, resources, or financial donations. Reach out to <a href="mailto:research@sleeping-ai.com">research@sleeping-ai.com</a>.</li>
             </ul>
-        </div>
-    </section>
-
-    <section id="research">
-        <div class="container">
-            <h2>02 / RESEARCH FOCUS: RELEASING PAPERS SOON.</h2>
-
-            <div class="grid">
-                <div class="card">
-                    <h3>AI in Music</h3>
-                    <p>Everything that in Music including Lyric2song, text2music, rave and techno.</p>
-                </div>
-                <div class="card">
-                    <h3>Scaling Laws</h3>
-                    <p>Working on knowing what limit Ilya was talking about</p>
-                </div>
-                <div class="card">
-                    <h3>Benchmark & Eval</h3>
-                    <p>We are as skeptical as Xeophone and working on fundamental questions.</p>
-                </div>
-                <div class="card">
-                    <h3>Model Training Architectures</h3>
-                    <p>Investigating novel, non-standard training methodologies.</p>
-                </div>
-            </div>
-            <p style="margin-top: 40px;">
-                **Research Inquiries:** <a href="mailto:research@sleeping-ai.com">research@sleeping-ai.com</a>
-            </p>
-            <a href="https://huggingface.co/sleeping-ai" class="button">HUGGING FACE ARTIFACTS</a>
-        </div>
-    </section>
-
-    <section id="team">
-        <div class="container">
-            <h2>03 / THE TEAM</h2>
-            <div class="grid">
-                <div class="card">
-                    <h3>AMMAR</h3>
-                    <p>**Role:** Creator, Lead Researcher</p>
-                    <p>**Status:** Undergrad Student</p>
-                    <p style="color: var(--color-text-dim);">Contact: ammar@sleeping-ai.com</p>
-                </div>
-            </div>
-            <p style="margin-top: 40px;">
-                **Latest transmissions:** <a href="https://x.com/hackedsleep">https://x.com/hackedsleep</a>
-            </p>
-        </div>
-    </section>
+        </section>
+    </main>
     
-    <section id="legal">
+    <section id="collaborators">
         <div class="container">
-            <h2>04 / LEGAL NOTICE</h2>
-            <p>
-                We always clearly outline within our projects and papers, what legal jurisdiction was followed of which country while doing a specific project. This is necessary since a single project can be executed by folks working from **3-4 different countries and 2 different continents**—a core feature of our decentralized operating model.
-            </p>
-            <p style="margin-top: 20px; color: var(--color-text-dim);">
-                *Transparency and compliance across jurisdictions are non-negotiable pillars of our work.*
-            </p>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="container">
-            <h2>05 / FUNDING & SUPPORT</h2>
-            
-            <p>We require massive compute and storage to do this properly, and we currently have a select few sponsors underwriting our hardware addiction.</p>
-            
-            <p>We are, however, open to new funding partnerships. (A critical caveat: We demand **complete intellectual freedom** within our research mandates. If you require steering or oversight, please fund a lesser lab instead.)</p>
-            
-            <h3 style="margin-top: 40px;">INQUIRIES</h3>
-            <p>
-                **General Contact:** <a href="mailto:contact@sleeping-ai.com">contact@sleeping-ai.com</a><br>
-                **Sponsorship:** <a href="mailto:contact@sleeping-ai.com">contact@sleeping-ai.com</a>
-            </p>
-            
+            <h4 class="collaborator-header">Worked with</h4>
+            <div class="collaborators-inner">
+                <div class="carousel-track">
+                    <span class="collaborator-item">TensorPool</span>
+                    <span class="collaborator-item">TensorPool</span>
+                    <span class="collaborator-item">TensorPool</span>
+                    <span class="collaborator-item">TensorPool</span>
+                    <span class="collaborator-item">TensorPool</span>
+                    <span class="collaborator-item">TensorPool</span>
+                    <span class="collaborator-item">TensorPool</span>
+                    <span class="collaborator-item">TensorPool</span>
+                </div>
+            </div>
         </div>
     </section>
 
     <footer>
-        <div class="container">
-            Sleeping AI Code: <a href="https://github.com/Sleeping-AI" target="_blank">GitHub</a> </div>
+        <div class="footer-content container">
+            <div class="social-links">
+                <a href="https://huggingface.co/sleeping-ai" target="_blank" title="Hugging Face">
+                    <img src="hf-logo-pirate.png" alt="Hugging Face Logo" class="hf-logo">
+                </a>
+                <a href="https://github.com/Sleeping-AI" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://x.com/hackedsleep" target="_blank" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
+            </div>
+            
+            <p class="footer-center-text">Sleeping AI team</p>
+
+            <p class="footer-contact">
+                <a href="mailto:contact@sleeping-ai.com">contact@sleeping-ai.com</a>
+            </p>
+        </div>
     </footer>
+    
+    <script>
+        const textTitles = [
+            'Sleeping AI',
+            'ישנה AI' // Hebrew for 'Sleeping AI' in RTL order
+        ];
+
+        const titleElement = document.getElementById('dynamic-title-container');
+        
+        // Fixed Speeds for Typing/Erasing
+        const TYPING_SPEED = 150; 
+        const ERASING_SPEED = 75; 
+        
+        // Function to generate a random duration between 1000ms (1s) and 3000ms (3s)
+        function getRandomPauseDuration() {
+            // Math.random() generates [0, 1). We want a range of 2000 (3000 - 1000).
+            return Math.floor(Math.random() * 2000) + 1000;
+        }
+
+        let titleIndex = 0;
+        let charIndex = 0;
+
+        function startTypingLoop() {
+             const currentText = textTitles[titleIndex];
+             const isHebrew = titleIndex === 1;
+             
+             if (charIndex < currentText.length) {
+                
+                // Typing: Simple append logic, followed by span replacement
+                let currentContent = currentText.substring(0, charIndex + 1);
+
+                // Re-apply the span tag for maroon styling on 'AI'
+                if (isHebrew) {
+                    currentContent = currentContent.replace(/AI/, '<span>AI</span>');
+                    titleElement.style.direction = 'rtl';
+                } else {
+                    currentContent = currentContent.replace(/AI$/, '<span>AI</span>');
+                    titleElement.style.direction = 'ltr';
+                }
+
+                titleElement.innerHTML = currentContent;
+                charIndex++;
+                setTimeout(startTypingLoop, TYPING_SPEED);
+
+             } else {
+                 // Pause before erasing using a random duration
+                 setTimeout(startErasingLoop, getRandomPauseDuration());
+             }
+        }
+
+        function startErasingLoop() {
+            const currentText = textTitles[titleIndex];
+            
+            if (charIndex > 0) {
+                // Erasing
+                charIndex--;
+                let currentContent = currentText.substring(0, charIndex);
+
+                // Re-apply the span tag (to keep the maroon color while erasing)
+                 if (titleIndex === 1) {
+                    currentContent = currentContent.replace(/AI/, '<span>AI</span>');
+                 } else {
+                    currentContent = currentContent.replace(/AI$/, '<span>AI</span>');
+                 }
+
+                titleElement.innerHTML = currentContent;
+                setTimeout(startErasingLoop, ERASING_SPEED);
+            } else {
+                // Done erasing, switch to the next title and wait a random time before starting
+                titleIndex = (titleIndex + 1) % textTitles.length;
+                setTimeout(startTypingLoop, getRandomPauseDuration()); 
+            }
+        }
+
+        // Initialize the animation
+        startTypingLoop();
+
+    </script>
 
 </body>
 </html>
