@@ -227,13 +227,33 @@
             filter: invert(1) brightness(1); 
         }
 
+        /* --- Footer Right-Hand Column Styling --- */
+        .footer-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end; /* Align links to the right */
+            gap: 5px; /* Space between research notes and email */
+            order: 3;
+        }
+
         .footer-contact {
             color: var(--color-secondary-text);
             font-size: 1.1em;
             font-weight: 400;
-            order: 3;
+            margin: 0;
         }
         
+        .blog-link {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--maroon-accent);
+            transition: color 0.3s;
+        }
+
+        .blog-link:hover {
+            color: var(--color-text);
+        }
+
         a {
             color: var(--dartmouth-green);
             text-decoration: none;
@@ -257,19 +277,16 @@
              color: var(--maroon-accent);
         }
 
-        /* --- Mobile Responsiveness Enhancements (Ensuring fluid layout) --- */
+        /* --- Mobile Responsiveness Enhancements --- */
         @media (max-width: 768px) {
-            /* Header adjustments for smaller text and fixed height */
             .header-content {
-                height: 2.5em; /* Adjusted slightly more for small screens */
+                height: 2.5em;
             }
             #dynamic-title-container {
                 font-size: 2.2em;
             }
-            
-            /* General padding and sizing adjustments */
             .container {
-                padding: 0 15px; /* Slightly reduced padding */
+                padding: 0 15px;
             }
             body {
                 font-size: 15px;
@@ -280,72 +297,30 @@
             .mission-text {
                 font-size: 1.1em;
             }
-
-            /* Research Grid will naturally stack below 280px minimum */
             .research-grid {
-                grid-template-columns: 1fr; /* Force single column on smaller tablets/vertical orientation */
+                grid-template-columns: 1fr;
             }
         }
         
         @media (max-width: 500px) {
-            /* Adjustments for narrow mobile phones */
-            .container {
-                padding: 0 10px; /* Minimal padding on very narrow screens */
-            }
-            .header-content {
-                 height: 2.2em; /* Further reduced height for smallest phones */
-            }
-            #dynamic-title-container {
-                font-size: 1.8em; /* Smaller dynamic title */
-            }
-
-            /* Footer stacking for mobile */
             .footer-content {
                 flex-direction: column;
                 gap: 15px;
-                padding-top: 20px;
                 text-align: center;
             }
-            .social-links {
-                order: 3; 
-            }
-            .footer-center-text {
-                order: 1; 
-            }
-            .footer-contact {
+            .social-links { order: 3; }
+            .footer-center-text { order: 1; }
+            .footer-right { 
                 order: 2; 
-            }
-            .footer-center-text, .footer-contact {
-                font-size: 0.9em;
-            }
-            
-            .collaborator-item {
-                font-size: 1.5em; /* Smaller text in the carousel */
-                margin-right: 30px;
+                align-items: center; /* Center links on mobile */
             }
         }
         
-        /* --- Modern Scrollbar Customization (Webkit Browsers: Chrome, Edge, Safari) --- */
-        /* Scrollbar track */
-        ::-webkit-scrollbar {
-            width: 10px; /* Width of the vertical scrollbar */
-        }
-        
-        /* Scrollbar background */
-        ::-webkit-scrollbar-track {
-            background: var(--color-bg); /* Black background (same as body) */
-        }
-
-        /* Scrollbar handle (the moving part) */
-        ::-webkit-scrollbar-thumb {
-            background: var(--dartmouth-green); /* Dartmouth Green color */
-            border-radius: 5px; /* Rounded edges */
-        }
-
-        /* Scrollbar handle on hover */
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--maroon-accent); /* Optional: Hover color change to maroon accent */
-        }
+        /* --- Modern Scrollbar --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--color-bg); }
+        ::-webkit-scrollbar-thumb { background: var(--dartmouth-green); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--maroon-accent); }
     </style>
 </head>
 <body>
@@ -443,29 +418,28 @@
                 <a href="https://x.com/hackedsleep" target="_blank" title="Twitter/X"><i class="fab fa-x-twitter"></i></a>
             </div>
             
-            <p class="footer-center-text">Sleeping AI team</p>
+            <p class="footer-center-text">Made by Sleeping AI</p>
 
-            <p class="footer-contact">
-                <a href="mailto:contact@sleeping-ai.com">contact@sleeping-ai.com</a>
-            </p>
+            <div class="footer-right">
+                <a href="blog.html" class="blog-link">Research Notes</a>
+                <p class="footer-contact">
+                    <a href="mailto:contact@sleeping-ai.com">contact@sleeping-ai.com</a>
+                </p>
+            </div>
         </div>
     </footer>
     
     <script>
         const textTitles = [
             'Sleeping AI',
-            'ישנה AI' // Hebrew for 'Sleeping AI' in RTL order
+            'ישנה AI' 
         ];
 
         const titleElement = document.getElementById('dynamic-title-container');
-        
-        // Fixed Speeds for Typing/Erasing
         const TYPING_SPEED = 150; 
         const ERASING_SPEED = 75; 
         
-        // Function to generate a random duration between 1000ms (1s) and 3000ms (3s)
         function getRandomPauseDuration() {
-            // Math.random() generates [0, 1). We want a range of 2000 (3000 - 1000).
             return Math.floor(Math.random() * 2000) + 1000;
         }
 
@@ -477,11 +451,8 @@
              const isHebrew = titleIndex === 1;
              
              if (charIndex < currentText.length) {
-                
-                // Typing: Simple append logic, followed by span replacement
                 let currentContent = currentText.substring(0, charIndex + 1);
 
-                // Re-apply the span tag for maroon styling on 'AI'
                 if (isHebrew) {
                     currentContent = currentContent.replace(/AI/, '<span>AI</span>');
                     titleElement.style.direction = 'rtl';
@@ -495,7 +466,6 @@
                 setTimeout(startTypingLoop, TYPING_SPEED);
 
              } else {
-                 // Pause before erasing using a random duration
                  setTimeout(startErasingLoop, getRandomPauseDuration());
              }
         }
@@ -504,11 +474,9 @@
             const currentText = textTitles[titleIndex];
             
             if (charIndex > 0) {
-                // Erasing
                 charIndex--;
                 let currentContent = currentText.substring(0, charIndex);
 
-                // Re-apply the span tag (to keep the maroon color while erasing)
                  if (titleIndex === 1) {
                     currentContent = currentContent.replace(/AI/, '<span>AI</span>');
                  } else {
@@ -518,15 +486,12 @@
                 titleElement.innerHTML = currentContent;
                 setTimeout(startErasingLoop, ERASING_SPEED);
             } else {
-                // Done erasing, switch to the next title and wait a random time before starting
                 titleIndex = (titleIndex + 1) % textTitles.length;
                 setTimeout(startTypingLoop, getRandomPauseDuration()); 
             }
         }
 
-        // Initialize the animation
         startTypingLoop();
-
     </script>
 
 </body>

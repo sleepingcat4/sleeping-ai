@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Google+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/png" href="ai.png">
+    <title>Sleeping AI</title>
+
+    <style>
+        :root {
+            --maroon-accent: #A51C30;
+            --dartmouth-green: #00693E;
+            --color-bg: #000000;
+            --color-text: #FFFFFF;
+            --color-secondary-text: #AAAAAA;
+            --color-card-bg: #111111;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Space Grotesk', sans-serif;
+            color: var(--color-text);
+            background-color: var(--color-bg);
+            margin: 0; padding: 0; line-height: 1.6;
+        }
+
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+        nav {
+            padding: 30px 0;
+            border-bottom: 1px solid #222;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-link {
+            color: var(--color-secondary-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link:hover { color: var(--maroon-accent); }
+
+        .blog-header { padding: 60px 0 40px 0; }
+        .blog-header h1 { 
+            font-size: 3em; 
+            margin: 0; 
+            color: var(--color-text); 
+            border-left: 6px solid var(--maroon-accent);
+            padding-left: 20px;
+        }
+        .blog-header p { color: var(--color-secondary-text); font-size: 1.2em; margin-top: 10px; }
+
+        /* Filter Tabs */
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--color-secondary-text);
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            border-color: var(--maroon-accent);
+            color: white;
+            background: rgba(165, 28, 48, 0.1);
+        }
+
+        /* Post Grid */
+        .posts-list { display: flex; flex-direction: column; gap: 30px; min-height: 400px; }
+
+        .post-card {
+            background: var(--color-card-bg);
+            border: 1px solid #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s transform ease, 0.3s border-color ease;
+        }
+
+        .post-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--maroon-accent);
+        }
+
+        .post-meta {
+            font-family: monospace;
+            color: var(--maroon-accent);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .post-card h2 { margin: 0 0 10px 0; font-size: 1.8em; }
+        .post-card p { color: var(--color-secondary-text); margin-bottom: 20px; }
+
+        .read-more {
+            color: var(--dartmouth-green);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        footer {
+            margin-top: 80px;
+            padding: 40px 0;
+            border-top: 1px solid #111;
+            text-align: center;
+            color: var(--color-secondary-text);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="container">
+        <a href="index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> back to home</a>
+        <div style="color: var(--maroon-accent); font-weight: bold; letter-spacing: 2px;">Sleeping AI</div>
+    </nav>
+
+    <header class="blog-header container">
+        <h1>Research Notes</h1>
+        <p>Technical logs, scaling experiments, and manifold observations.</p>
+    </header>
+
+    <main class="container">
+        <div class="filters">
+            <button class="filter-btn active" data-category="all">All</button>
+            <button class="filter-btn" data-category="datasets">Datasets</button>
+            <button class="filter-btn" data-category="scaling">Scaling Laws</button>
+            <button class="filter-btn" data-category="evals">Evals</button>
+            <button class="filter-btn" data-category="architecture">Architecture</button>
+        </div>
+
+        <div class="posts-list" id="posts-container">
+            <a href="post.html?id=demo-post" class="post-card" data-category="scaling">
+                <div class="post-meta">
+                    <span>DEC 19, 2024</span>
+                    <span>SCALING LAWS</span>
+                </div>
+                <h2>The Geometry of Scaling</h2>
+                <p>A demo post exploring how to test the Markdown and LaTeX rendering system.</p>
+                <div class="read-more">Read Paper <i class="fa-solid fa-chevron-right"></i></div>
+            </a>
+
+            <a href="post.html?id=latent-geometry" class="post-card" data-category="architecture">
+                <div class="post-meta">
+                    <span>DEC 15, 2024</span>
+                    <span>ARCHITECTURE</span>
+                </div>
+                <h2>Non-Euclidean Latent Spaces</h2>
+                <p>Investigating token hierarchies in high-dimensional manifolds.</p>
+                <div class="read-more">Read Paper <i class="fa-solid fa-chevron-right"></i></div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="container">
+        <p>Made by Sleeping AI</p>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.filter-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Toggle active class
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-category');
+                const posts = document.querySelectorAll('.post-card');
+
+                posts.forEach(post => {
+                    const postCategory = post.getAttribute('data-category');
+                    if (filter === 'all' || postCategory === filter) {
+                        post.style.display = 'block';
+                    } else {
+                        post.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

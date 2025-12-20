@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Note | Sleeping AI</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --maroon-accent: #A51C30;
+            --color-bg: #000000;
+            --color-text: #E0E0E0;
+            --color-card-bg: #111111;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        .nav-bar {
+            border-bottom: 1px solid #222;
+            padding: 20px 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100;
+        }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+
+        .back-btn {
+            color: var(--maroon-accent);
+            text-decoration: none;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        article { padding: 60px 0; }
+
+        /* Markdown Styling */
+        #content h1 { font-size: 2.5em; color: #fff; margin-bottom: 0.5em; }
+        #content h2 { color: var(--maroon-accent); border-bottom: 1px solid #222; padding-bottom: 10px; margin-top: 1.5em; }
+        #content p { margin-bottom: 1.5em; font-size: 1.1em; }
+        #content code { background: #222; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        #content pre { background: #0a0a0a !important; border: 1px solid #222; padding: 1.5em; border-radius: 8px; overflow-x: auto; }
+        #content blockquote { border-left: 4px solid var(--maroon-accent); margin: 0; padding-left: 20px; color: #aaa; font-style: italic; }
+        
+        .loading { text-align: center; padding: 100px; color: var(--maroon-accent); font-weight: bold; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+
+    <div class="nav-bar">
+        <div class="container">
+            <a href="blog.html" class="back-btn">← RESEARCH NOTES</a>
+        </div>
+    </div>
+
+    <main class="container">
+        <article id="content">
+            <div class="loading">INITIALIZING NEURAL RENDERER...</div>
+        </article>
+    </main>
+
+    <script>
+        async function fetchPost() {
+            const params = new URLSearchParams(window.location.search);
+            const postId = params.get('id');
+            const contentDiv = document.getElementById('content');
+
+            if (!postId) {
+                contentDiv.innerHTML = "<h1>Error 404</h1><p>No research ID specified.</p>";
+                return;
+            }
+
+            try {
+                // It looks for a file like 'posts/latent-geometry.md'
+                const response = await fetch(`posts/${postId}.md`);
+                if (!response.ok) throw new Error("File not found");
+                
+                const markdown = await response.text();
+                
+                // Convert Markdown to HTML
+                contentDiv.innerHTML = marked.parse(markdown);
+
+                // Trigger Syntax Highlighting and Math Rendering
+                Prism.highlightAll();
+                if (window.MathJax && MathJax.typeset) {
+                    MathJax.typeset();
+                }
+
+            } catch (err) {
+                contentDiv.innerHTML = `<h1>Note Not Found</h1><p>The research paper '${postId}' has not been published yet or the path is incorrect.</p>`;
+            }
+        }
+
+        fetchPost();
+    </script>
+</body>
+</html>
